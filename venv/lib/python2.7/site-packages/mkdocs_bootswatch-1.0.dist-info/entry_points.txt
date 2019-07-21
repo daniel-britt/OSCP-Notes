@@ -1,0 +1,14 @@
+[mkdocs.themes]
+amelia = mkdocs_bootswatch.amelia
+cerulean = mkdocs_bootswatch.cerulean
+cosmo = mkdocs_bootswatch.cosmo
+cyborg = mkdocs_bootswatch.cyborg
+flatly = mkdocs_bootswatch.flatly
+journal = mkdocs_bootswatch.journal
+readable = mkdocs_bootswatch.readable
+simplex = mkdocs_bootswatch.simplex
+slate = mkdocs_bootswatch.slate
+spacelab = mkdocs_bootswatch.spacelab
+united = mkdocs_bootswatch.united
+yeti = mkdocs_bootswatch.yeti
+
