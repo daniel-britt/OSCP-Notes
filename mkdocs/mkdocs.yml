@@ -9,7 +9,6 @@ nav:
   - 'Useful Links': 'useful links.md'
   - 'Enumeration': 'enumeration.md'
   - 'Shells': 'shells.md'
-  - Tools:
-    - 'Tools': 'tools.md'
-    - 'Netcat': 'tools/netcat.md'
+  - 'Privesc': 'privesc.md'
+  - 'Tools': 'tools.md'
   - 'About': 'about.md'

@@ -8,7 +8,7 @@
         <meta name="author" content="Daniel Britt">
         <link rel="canonical" href="https://daniel-britt.github.io/OSCP-Notes/tools/netcat/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Netcat - OSCP Notes</title>
+        <title>General Listener - OSCP Notes</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -55,18 +55,11 @@
                             <li >
                                 <a href="../../shells/">Shells</a>
                             </li>
-                            <li class="dropdown active">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li >
-    <a href="../">Tools</a>
-</li>
-                                    
-<li class="active">
-    <a href="./">Netcat</a>
-</li>
-                                </ul>
+                            <li >
+                                <a href="../../privesc/">Privesc</a>
+                            </li>
+                            <li >
+                                <a href="../">Tools</a>
                             </li>
                             <li >
                                 <a href="../../about/">About</a>
@@ -79,16 +72,6 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li >
-                                <a rel="next" href="../">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li >
-                                <a rel="prev" href="../../about/">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
                     </ul>
                 </div>
             </div>
@@ -152,7 +135,12 @@
 <h1 id="netcat-as-a-banner-grabber">Netcat as a Banner Grabber</h1>
 <hr />
 <pre><code>echo &quot;&quot; | nc -nv -w1 &lt;IP Address&gt; &lt;Ports&gt;
-</code></pre></div>
+</code></pre>
+
+<p><strong>Sources</strong>: </p>
+<ul>
+<li><a href="https://netsec.ws/?p=292">Netsec</a></li>
+</ul></div>
         </div>
 
         <footer class="col-md-12">

@@ -50,3 +50,7 @@ nc -z <IP Address> <Port Range in abc - xyz format>
 ```
 echo "" | nc -nv -w1 <IP Address> <Ports>
 ```
+
+**Sources**: 
+
+- [Netsec](https://netsec.ws/?p=292)
