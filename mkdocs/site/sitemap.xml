@@ -21,8 +21,13 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc></loc>
-     
+     <loc>https://daniel-britt.github.io/OSCP-Notes/tools/netcat/</loc>
+     <lastmod>2019-07-21</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://daniel-britt.github.io/OSCP-Notes/about/</loc>
+     <lastmod>2019-07-21</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
