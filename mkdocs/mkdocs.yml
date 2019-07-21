@@ -6,7 +6,8 @@ copyright: 2019 by Daniel Britt
 theme: slate
 
 nav:
-  - 'Home': 'index.md'
-  - Resources:
-    - 'Blogs': 'blogs.md'
+  - 'Useful Links': 'useful links.md'
+  - 'Enumeration': 'enumeration.md'
   - 'Shells': 'shells.md'
+  - 'Tools': 'tools.md'
+  - 'Walkthroughs': 'walkthroughs.md'
