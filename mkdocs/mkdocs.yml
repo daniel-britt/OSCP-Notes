@@ -1,2 +1,12 @@
-site_name: My Docs
+site_name: OSCP Notes
+site_url: https://daniel-britt.github.io/OSCP-Notes/
+site_author: Daniel Britt
+site_description: Notes and resources for preparing to take the OSCP exam.
+copyright: 2019 by Daniel Britt
 theme: slate
+
+nav:
+  - 'Home': 'index.md'
+  - Resources:
+    - 'Blogs': 'blogs.md'
+  - 'Shells': 'shells.md'
