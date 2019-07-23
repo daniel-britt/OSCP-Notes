@@ -14,6 +14,7 @@
 - <https://netsec.ws/>
 - <http://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/>
 - <https://delta.navisec.io/reverse-shell-reference/#upgrading-shells>
+- <https://github.com/frizb/Windows-Privilege-Escalation>
 
 ### News
 - <https://news.ycombinator.com/>
