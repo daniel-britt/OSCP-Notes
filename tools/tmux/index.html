@@ -92,6 +92,12 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="tmux-shortcuts-cheatsheet">tmux Shortcuts &amp; Cheatsheet</h1>
+<p><a href="https://github.com/gpakosz/.tmux">I recommend installing this .tmux.conf file</a> for the following reasons:</p>
+<ul>
+<li>Prefix is changed to <code>Ctrl + a</code>  </li>
+<li>Mouse mode can be enabled (<code>prefix + m</code>)  </li>
+<li>Check out the "Features" list  </li>
+</ul>
 <p>Start new:</p>
 <pre><code>tmux
 </code></pre>
@@ -113,7 +119,7 @@
 <p><a name="killAllSessions"></a>Kill all the tmux sessions:</p>
 <pre><code>tmux ls | grep : | cut -d. -f1 | awk '{print substr($1, 0, length($1)-1)}' | xargs kill
 </code></pre>
-<p>In tmux, hit the prefix <code>ctrl+b</code> (my modified prefix is ctrl+a) and then:</p>
+<p>In tmux, hit the prefix <code>Ctrl+b</code> (my modified prefix is <code>Ctrl+a</code>) and then:</p>
 <h2 id="sessions">Sessions</h2>
 <pre><code>:new&lt;CR&gt;  new session
 s  list sessions
@@ -235,7 +241,7 @@ bind Down last-window \; swap-pane -s tmp.1 \; kill-window -t tmp
 <li><a href="http://superuser.com/questions/343572/tmux-how-do-i-reorder-my-windows">How to reorder windows</a></li>
 </ul>
 <p><br></p>
-<p>Source: https://gist.github.com/MohamedAlaa/2961058<br />
+<p><a href="https://gist.github.com/MohamedAlaa/2961058">Source</a><br />
 Updated 22 July 2019</p></div>
         </div>
 

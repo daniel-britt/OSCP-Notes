@@ -8,7 +8,7 @@
         <meta name="author" content="Daniel Britt">
         <link rel="canonical" href="https://daniel-britt.github.io/OSCP-Notes/tools/nmap/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Nmap - OSCP Notes</title>
+        <title>nmap - OSCP Notes</title>
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome.min.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
@@ -80,11 +80,28 @@
         <div class="container">
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#nmap">nmap</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
 
-</div>
+<h1 id="nmap">nmap</h1>
+<p>My go-to thanks to IppSec:</p>
+<pre><code>nmap -sC -sV -oA nmap/help &lt;IP&gt;
+</code></pre>
+
+<ul>
+<li>-sC equivalent to --script=default</li>
+<li>-sV = Probe open ports to determine service/version info</li>
+</ul>
+<p>Ping scan</p>
+<pre><code>nmap -sP 10.0.0.0/24
+</code></pre>
+
+<p>Other great resources:
+* <a href="https://nmap.org/book/man.html">https://nmap.org/book/man.html</a>
+* <a href="https://blogs.sans.org/pen-testing/files/2013/10/NmapCheatSheetv1.1.pdf">https://blogs.sans.org/pen-testing/files/2013/10/NmapCheatSheetv1.1.pdf</a>
+* <a href="https://highon.coffee/blog/nmap-cheat-sheet/">https://highon.coffee/blog/nmap-cheat-sheet/</a></p></div>
         </div>
 
         <footer class="col-md-12">

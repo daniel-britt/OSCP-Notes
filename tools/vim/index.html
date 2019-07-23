@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="Daniel Britt">
+        <link rel="canonical" href="https://daniel-britt.github.io/OSCP-Notes/tools/vim/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Introduction # - OSCP Notes</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/darcula.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="../../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../../js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../..">OSCP Notes</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li >
+                                <a href="../../useful links/">Useful Links</a>
+                            </li>
+                            <li >
+                                <a href="../../enumeration/">Enumeration</a>
+                            </li>
+                            <li >
+                                <a href="../../shells/">Shells</a>
+                            </li>
+                            <li >
+                                <a href="../../privesc/">Privesc</a>
+                            </li>
+                            <li >
+                                <a href="../">Tools</a>
+                            </li>
+                            <li >
+                                <a href="../../about/">About</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#introduction">Introduction</a></li>
+        <li class="main "><a href="#general">General</a></li>
+            <li><a href="#windows">Windows</a></li>
+            <li><a href="#entering-insert-mode">Entering insert mode</a></li>
+            <li><a href="#recording">Recording</a></li>
+            <li><a href="#spell-checking">Spell checking</a></li>
+        <li class="main "><a href="#navigation">Navigation</a></li>
+        <li class="main "><a href="#search-jump">Search, jump</a></li>
+            <li><a href="#vimgrep-and-quickfix-list">vimgrep and quickfix list</a></li>
+            <li><a href="#marks">Marks</a></li>
+        <li class="main "><a href="#editing">Editing</a></li>
+        <li class="main "><a href="#misc">Misc</a></li>
+        <li class="main "><a href="#key-sequences">Key sequences</a></li>
+            <li><a href="#replace-a-word-in-a-number-of-occurrences-with-bar-use-word-under-cursor-or-foo">Replace a word in a number of occurrences with 'bar'; use word under cursor (* or /foo)</a></li>
+            <li><a href="#insert-3-times-help-help-help-help">Insert 3 times "Help!": Help! Help! Help!</a></li>
+            <li><a href="#insert-previously-yanked-text-in-line-after-current">Insert previously yanked text in line after current</a></li>
+            <li><a href="#search-for-selected-text">Search for selected text</a></li>
+            <li><a href="#comment-out-selection">Comment out selection</a></li>
+        <li class="main "><a href="#abbreviations">Abbreviations</a></li>
+        <li class="main "><a href="#configuration">Configuration</a></li>
+        <li class="main "><a href="#nerd-tree">NERD-tree</a></li>
+        <li class="main "><a href="#ctrlpvim">ctrlp.vim</a></li>
+        <li class="main "><a href="#formating">Formating</a></li>
+        <li class="main "><a href="#links">Links</a></li>
+            <li><a href="#cheat-sheets">Cheat sheets</a></li>
+            <li><a href="#articles">Articles</a></li>
+            <li><a href="#tipps-and-tricks">tipps and tricks</a></li>
+            <li><a href="#plugins">Plugins</a></li>
+            <li><a href="#themes">Themes</a></li>
+            <li><a href="#color-column">Color column</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="introduction">Introduction</h1>
+<ul>
+<li>C-a == Ctrl-a </li>
+<li>M-a == Alt-a</li>
+</ul>
+<h1 id="general">General</h1>
+<pre><code>:q        close
+:w        write/saves
+:wa[!]    write/save all windows [force]
+:wq       write/save and close
+:x        save and quit, same as wq
+:q!       force close if file has changed and not save changes
+</code></pre>
+
+<pre><code>v        Enter visual mode for selection of LINES
+C-v      Enter visual mode for selection of BLOCKS
+y        Yank/copy selected region
+yy       Yank/copy entire line
+&quot;&lt;reg&gt;y  Yank/copy marked region into register &lt;reg&gt; (register from a-z)
+c        Cut selection
+p        Paste yanked content
+&quot;&lt;reg&gt;p  Paste yanked content in register &lt;reg&gt; (from a-z)
+P        Paste yanked content BEFORE
+</code></pre>
+
+<pre><code>u        Undo
+C-r      Redo
+</code></pre>
+
+<pre><code>:!&lt;cmd&gt;  Execute shell command &lt;cmd&gt;
+C-z      send vim to background (fg brings it to front again)
+</code></pre>
+
+<h3 id="windows">Windows</h3>
+<pre><code>C-ws     Split current window horizontally (alternative :split)
+C-wv     Split current window vertically (alternative :vsplit)
+C-ww     Jump to the next window
+C-wARROW Jump to window left/right/top/bottom (arrow keys) to the current
+C-w#&lt;    Shrink/resize current window from the right by # (default 1) 
+C-w#&gt;    Increase/resize current window to the right by # (default 1) 
+</code></pre>
+
+<h3 id="entering-insert-mode">Entering insert mode</h3>
+<pre><code>a        Append text after the cursor
+A        Append text at the end of the line
+i        Insert text before the cursor
+I        Insert text before the first non-blank in the line
+o        Begin a new line BELOW the cursor and insert text
+O        Begin a new line ABOVE the cursor and insert text 
+s        Erase the current letter under the cursor, set insert-mode
+S        Erase the whole line, set insert-mode
+cc       Delete the current line, set insert-mode
+cw       Delete word, set insert-mode
+dd       Delete line under curser
+</code></pre>
+
+<h3 id="recording">Recording</h3>
+<p>Vim has 26 registers (a-z), select the one you want to record in, see below. Exit Record mode with ESC</p>
+<pre><code>q[a-z]   Start recording, everything will be recorded including movement actions.
+@[a-z]   Execute the recorded actions.    
+</code></pre>
+
+<h3 id="spell-checking">Spell checking</h3>
+<p>See vimcast #19 as an introduction: http://vimcasts.org/episodes/spell-checking/</p>
+<p>Assuming that you have the following in .vimrc:</p>
+<pre><code>nnoremap &lt;silent&gt; &lt;leader&gt;s :set spell!&lt;cr&gt;
+</code></pre>
+
+<pre><code>&lt;leader&gt;s Toggle Spelling
+]s       Next spelling mistake
+[s       Previous spelling mistake
+z=       Give Suggestions (prepent 1, use first suggestions automatically)
+zg       Add misspelled to spellfile
+zug      Remove word from spellfile
+</code></pre>
+
+<p>see http://vimdoc.sourceforge.net/htmldoc/spell.html</p>
+<h1 id="navigation">Navigation</h1>
+<p><em>essential</em></p>
+<pre><code>h        cursor left
+j        cursor down
+l        cursor right
+k        cursor up
+</code></pre>
+
+<pre><code>H        Jump to TOP of screen
+M        Jump to MIDDLE of screen
+L        Jump to BOTTOM of screen
+C-b      Move back one full screen (page up)
+C-f      Move forward one full screen (page down)
+C-d      Move forward 1/2 screen; half page down
+C-u      Move back (up) 1/2 screen; half page up
+</code></pre>
+
+<pre><code>w        jump by start of words (punctuation considered words)
+e        jump to end of words (punctuation considered words)
+b        jump backward by words (punctuation considered words)
+0 (zero) start of line
+^        first non-blank character of line
+$        end of line
+G        bottom of file
+gg       top of file
+</code></pre>
+
+<p><em>good to know</em></p>
+<pre><code>E        jump to end of words (no punctuation)
+W        jump by words (spaces separate words)
+B        jump backward by words (no punctuation)
+#G       goto line #
+#gg      goto line #
+</code></pre>
+
+<h1 id="search-jump">Search, jump</h1>
+<p>consider consulting <code>:help [</code> and <code>:help g</code></p>
+<pre><code>*        search for word under cursor (forward) and highlight occurrence (see incsearch, hlsearch below)
+%        jump from open/close ( / #if / ( / { to corresponding ) / #endif / } 
+[{       jump to start of current code block
+]}       jump to end of current code block
+gd       jump to var declaration (see incsearch, hlsearch below)
+f&lt;c&gt;     Find char &lt;c&gt; from current cursor position -- forwards
+F&lt;c&gt;     Find char &lt;c&gt; from current cursor position -- backwards
+,        Repeat previous f&lt;c&gt; or F&lt;c&gt; in opposite direction
+;        Repeat previous f&lt;c&gt; or F&lt;c&gt; in same direction
+'.       jump back to last edited line.
+g;       jump back to last edited position.
+[m       jump to start of funtion body
+[i       show first declartion/use of the word under cursor
+[I       show all occurrences of word under cursor in current file
+[/       cursor to N previous start of a C comment
+</code></pre>
+
+<h3 id="vimgrep-and-quickfix-list">vimgrep and quickfix list</h3>
+<p>built-in grep, vimgrep uses vim's quickfix list. see vimcasts#44 for introduction: http://vimcasts.org/episodes/search-multiple-files-with-vimgrep/</p>
+<pre><code>:vimgrep /&lt;regex&gt;/g %        Search for &lt;regex&gt; with multiple occasions per line (g) 
+                             in current file (%)
+:vimgrep /&lt;C-r&gt;// %          On the command line, &lt;C-r&gt;/ (that is: CTRL-R followed by /) 
+                             will insert the last search pattern.  
+:vimgrep /&lt;a&gt;/g &lt;filelist&gt;   Search in the given files (&lt;filelist&gt;) 
+:vimgrep /&lt;a&gt;/g *.cc         Search in all *.cc files current directory
+:vimgrep /&lt;a&gt;/g **/*.cc      Search in all *.cc files in every sub-directory (recursively) 
+:vimgrep /&lt;a&gt;/g `find . -type f`     
+                             Search in all files that are returns by the backtick command.
+
+:vim     short for :vimgrep
+
+:cnext   Jump to next record/match in quickfix list
+:cprev   Jump to previous record/match in quickfix list
+</code></pre>
+
+<p>Unimpaired plugin (https://github.com/tpope/vim-unimpaired) provides the following mappings:</p>
+<pre><code>[q       see :cprev
+]q       see :cnext
+[Q       see :cfirst
+]Q       see :clast
+</code></pre>
+
+<p>see also: http://usevim.com/2012/08/24/vim101-quickfix/ and http://vimdoc.sourceforge.net/htmldoc/quickfix.html</p>
+<h2 id="marks">Marks</h2>
+<p>Mark a position in a buffer and jump back to it. see also http://vim.wikia.com/wiki/Using_marks </p>
+<pre><code>ma       set mark a at current cursor location
+'a       jump to line of mark a (first non-blank character in line)
+`a       jump to position (line and column) of mark a
+d'a      delete from current line to line of mark a
+d`a      delete from current cursor position to position of mark a
+c'a      change text from current line to line of mark a
+y`a      yank text to unnamed buffer from cursor to position of mark a
+:marks   list all the current marks
+:marks aB list marks a, B
+</code></pre>
+
+<p>(text is copied from link above)</p>
+<h1 id="editing">Editing</h1>
+<pre><code>x        Delete char UNDER cursor
+X        Delete char BEFORE cursor
+#x       Delete the next # chars. starting from char under cursor
+dw       Delete next word
+dW       Delete UP TO the next word
+d^       Delete up unto the beginning of the line
+d$       Delete until end of the line 
+D        See d$, delete until end of the line  
+dd       Delete whole line
+dib      Delete contents in parenthesis '(' ')' block (e.g. function args)
+diB      Delete inner '{' '}' block
+daB      Delete a '{' '}' block
+das      Delete a senctence
+diw      Delete word under cursor
+df&lt;c&gt;    Delete until next occurence of &lt;c&gt; (char) found (including &lt;c&gt;) [in single line]
+dt&lt;c&gt;    Delete until next occurence of &lt;c&gt; (char) found (without &lt;c&gt;!!!) [in single line]
+
+ciw      Change word under cursor 
+ciB      Change inner '{' '}' block
+cf&lt;c&gt;    See &quot;df&lt;c&gt;&quot; but change instead of delete
+ct&lt;c&gt;    See &quot;dt&lt;c&gt;&quot; but change instead of delete
+
+#J       Merge # number of lines together
+</code></pre>
+
+<pre><code>gq       (in visual-mode) format selected text according to line-width
+gqq      format current line according to line-width
+#gqq     format next #-lines  
+</code></pre>
+
+<pre><code>C-n      Keyword completion
+Tab      Keyword completion (SuperTab plugin)
+r&lt;c&gt;     Replace char &lt;c&gt;
+#r&lt;c&gt;    Replace follow # chars with &lt;c&gt;, : csock, cursor on s, 3re ceeek
+</code></pre>
+
+<pre><code>:s/xxx/yyy/    Replace xxx with yyy at the first occurrence
+:s/xxx/yyy/g   Replace xxx with yyy first occurrence, global (whole sentence)
+:s/xxx/yyy/gc  Replace xxx with yyy global with confirm
+:%s/xxx/yyy/g  Replace xxx with yyy global in the whole file
+</code></pre>
+
+<pre><code>u        Convert selection (visual mode) to lowercase
+U        Convert selection (visual mode) to uppercase
+</code></pre>
+
+<pre><code>:g/^#/d  Delete all lines that begins with #
+:g/^$/d  Delete all lines that are empty
+</code></pre>
+
+<h1 id="misc">Misc</h1>
+<pre><code>ga       Show ASCII of char under cursor
+</code></pre>
+
+<h1 id="key-sequences">Key sequences</h1>
+<h4 id="replace-a-word-in-a-number-of-occurrences-with-bar-use-word-under-cursor-or-foo">Replace a word in a number of occurrences with 'bar'; use word under cursor (<code>*</code> or <code>/foo</code>)</h4>
+<p><code>* cw bar ESC n .</code> </p>
+<pre><code>*     word under cursor 'foo'
+cw    change word (enter insert mode)
+bar   typed new word 'bar'
+ESC   exit insert mode
+n     next occurrence
+.     repeat previous command 
+</code></pre>
+
+<h4 id="insert-3-times-help-help-help-help">Insert 3 times "Help!": <code>Help! Help! Help!</code></h4>
+<p><code>3i Help!_ ESC</code></p>
+<h4 id="insert-previously-yanked-text-in-line-after-current">Insert previously yanked text in line after current</h4>
+<p><code>oESCp</code> </p>
+<h4 id="search-for-selected-text">Search for selected text</h4>
+<p><code>&lt;select&gt; y / C-r0</code> </p>
+<pre><code>&lt;select&gt; Select text in VISUAL mode (v)
+y        Yank selection
+/        Search for
+C-r0     Press Ctrl-R and 0 to paste in
+</code></pre>
+
+<h4 id="comment-out-selection">Comment out selection</h4>
+<p><code>C-v &lt;select&gt; # ESC ESC</code></p>
+<pre><code>C-v   Enter VISUAL block mode
+&lt;sel&gt; Select lines
+#     Comment char for programming language (perl, python, bash, etc)
+ESC   Exit
+ESC   Completes adding comment char for previous selected block
+</code></pre>
+
+<h1 id="abbreviations">Abbreviations</h1>
+<p>auto correction of frequently misspelled words.</p>
+<pre><code>:abbr Lunix Linux
+:abbr accross across
+:abbr hte the
+</code></pre>
+
+<h1 id="configuration">Configuration</h1>
+<ul>
+<li>If you set the <strong>incsearch</strong> option, Vim will show the first match for the pattern, while you are still typing it. This quickly shows a typo in the pattern.</li>
+<li>If you set the <strong>hlsearch</strong> option, Vim will highlight all matches for the pattern with a yellow background. This gives a quick overview of where the search command will take you. In program code it can show where a variable is used. You don't even have to move the cursor to see the matches.</li>
+</ul>
+<h1 id="nerd-tree">NERD-tree</h1>
+<p>https://github.com/scrooloose/nerdtree/blob/master/doc/NERD_tree.txt</p>
+<pre><code>F3       Toogle NERD-Tree visible 
+</code></pre>
+
+<h1 id="ctrlpvim">ctrlp.vim</h1>
+<p>https://github.com/kien/ctrlp.vim</p>
+<pre><code>C-p      Open ctrlp window (alternative :CtrlP)
+:CtrlP d Open CtrlP with specific d = directory
+</code></pre>
+
+<pre><code>C-b      Change mode: mru (most recent used) | buffers | files
+</code></pre>
+
+<h1 id="formating">Formating</h1>
+<p>Use <code>gq</code> (see Editing section) for formating lines according to configured line-width. 
+For C++ formating using clang-format see https://github.com/rhysd/vim-clang-format</p>
+<h1 id="links">Links</h1>
+<h2 id="cheat-sheets">Cheat sheets</h2>
+<ul>
+<li>http://www.worldtimzone.com/res/vi.html</li>
+<li>http://www.fprintf.net/vimCheatSheet.html</li>
+<li>https://wiki.archlinux.org/index.php/Vim</li>
+<li>http://www.fprintf.net/vimCheatSheet.html</li>
+<li><a href="http://rtorruellas.com/vim-cheat-sheet/">Yet Another Vim Cheat Sheet</a></li>
+</ul>
+<h2 id="articles">Articles</h2>
+<ul>
+<li>Seven habits of effective text editing: http://www.moolenaar.net/habits.html</li>
+<li>Vim After 11 Years: http://statico.github.com/vim.html</li>
+<li>Coming Home to Vim: http://stevelosh.com/blog/2010/09/coming-home-to-vim </li>
+</ul>
+<h2 id="tipps-and-tricks">tipps and tricks</h2>
+<ul>
+<li><a href="http://vimcasts.org/">vimcasts.org</a> Video-casts on vim</li>
+<li><a href="http://usevim.com/">usevim.com</a> Plugin introductions and useful tipps</li>
+<li><a href="http://vimregex.com/">vimregex.com</a> Infos about vims regex engine </li>
+<li>Productive vim shortcuts http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim </li>
+<li>100 Vim commands every programmer should know http://www.catswhocode.com/blog/100-vim-commands-every-programmer-should-know</li>
+<li><a href="http://vimgenius.com/">VimGenius</a> Interactive vim lesson, with some muscle learn potential</li>
+<li><a href="http://zzapper.co.uk/vimtips.html">Best of VimTips</a> zzapper 15 Years of Vi + 8+ years of Vim and still learning </li>
+<li>http://rayninfo.co.uk/vimtips.html</li>
+<li>Use ag (silver searcher) as an indexer for Ctrl-P; and py-matcher for ctrl-p matching function: http://blog.patspam.com/2014/super-fast-ctrlp</li>
+<li><a href="https://wincent.com/wiki/Vim_cheatsheet">Command-T authors cheatsheet</a></li>
+<li>https://takac.github.io/2013/01/30/vim-grammar/</li>
+</ul>
+<h2 id="plugins">Plugins</h2>
+<ul>
+<li>NERDTree</li>
+<li>NERDCommenter</li>
+<li>Ctrl-P</li>
+<li>easytags</li>
+<li>unimpard</li>
+<li>supertab</li>
+<li>tagbar</li>
+<li>omnicomplete (C++)</li>
+</ul>
+<h2 id="themes">Themes</h2>
+<ul>
+<li>zenburn</li>
+<li>tango</li>
+</ul>
+<h2 id="color-column">Color column</h2>
+<ul>
+<li>activate colorcolumn: http://stackoverflow.com/questions/1919028/how-to-show-vertical-line-to-wrap-the-line-in-vim</li>
+<li>set color: http://choorucode.wordpress.com/2011/07/29/vim-set-color-of-colorcolumn/</li>
+</ul>
+<pre><code>:set colorcolumn=81
+highlight ColorColumn ctermbg=8
+</code></pre>
+
+<p><a href="https://gist.github.com/awidegreen/3854277">Source</a><br />
+Updated 22 July 2019</p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>2019 by Daniel Britt</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"search": 83, "next": 78, "help": 191, "previous": 80};
+        </script>
+        <script src="../../js/base.js" defer></script>
+        <script src="../../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
